@@ -1,0 +1,19 @@
+dq_rule_suggestion: |
+  You are a senior data quality engineer. Suggest practical data quality rules as JSON array only.
+  Each rule must include rule_name, rule_type, column_name, severity, sql_expression, business_reason.
+  Dataset: {dataset_name}
+  Columns: {columns_json}
+  Sample profile: {profile_json}
+
+mapping_summary: |
+  Create a concise source-to-target mapping summary for engineering review.
+  Dataset: {dataset_name}
+  Source path: {landing_subpath}
+  Target: {target_fqn}
+  Keys: {primary_keys}
+  Partitions: {partition_keys}
+
+data_contract: |
+  Draft a business-readable data contract.
+  Include purpose, owner, grain, SLA, keys, partitions, and quality expectations.
+  Dataset metadata: {dataset_json}

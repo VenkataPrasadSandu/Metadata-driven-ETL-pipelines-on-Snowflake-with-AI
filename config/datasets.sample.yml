@@ -1,0 +1,69 @@
+datasets:
+  - dataset_name: CUSTOMER
+    description: Customer master data from CRM source
+    domain: SALES
+    owner: data-engineering@example.com
+    enabled: true
+    landing_subpath: raw/customer
+    target_database: AI_ETL_DEV
+    target_schema: BRONZE
+    target_table: CUSTOMER_RAW
+    stage_name: CONTROL.STG_RAW
+    file_format_name: CONTROL.FF_PARQUET
+    file_type: PARQUET
+    load_mode: APPEND
+    primary_keys: [CUSTOMER_ID]
+    partition_keys: [LOAD_DATE]
+    expected_arrival_cron: "0 6 * * * UTC"
+    freshness_sla_minutes: 180
+    schema_evolution: true
+    dq_enabled: true
+    tags:
+      sensitivity: INTERNAL
+      source_system: CRM
+
+  - dataset_name: CLAIMS
+    description: Claims transactions from payer source
+    domain: HEALTHCARE
+    owner: data-engineering@example.com
+    enabled: true
+    landing_subpath: raw/claims
+    target_database: AI_ETL_DEV
+    target_schema: BRONZE
+    target_table: CLAIMS_RAW
+    stage_name: CONTROL.STG_RAW
+    file_format_name: CONTROL.FF_PARQUET
+    file_type: PARQUET
+    load_mode: APPEND
+    primary_keys: [CLAIM_ID]
+    partition_keys: [LOAD_DATE]
+    expected_arrival_cron: "0 7 * * * UTC"
+    freshness_sla_minutes: 240
+    schema_evolution: true
+    dq_enabled: true
+    tags:
+      sensitivity: PHI
+      source_system: CLAIMS_PLATFORM
+
+  - dataset_name: SLSDA
+    description: Retail sales daily activity dataset
+    domain: RETAIL
+    owner: data-engineering@example.com
+    enabled: false
+    landing_subpath: raw/slsda
+    target_database: AI_ETL_DEV
+    target_schema: BRONZE
+    target_table: SLSDA_RAW
+    stage_name: CONTROL.STG_RAW
+    file_format_name: CONTROL.FF_PARQUET
+    file_type: PARQUET
+    load_mode: MERGE
+    primary_keys: [STORE_ID, SKU_ID, SALES_DATE]
+    partition_keys: [SALES_DATE]
+    expected_arrival_cron: "0 8 * * * UTC"
+    freshness_sla_minutes: 240
+    schema_evolution: true
+    dq_enabled: true
+    tags:
+      sensitivity: INTERNAL
+      source_system: RETAIL_POS
