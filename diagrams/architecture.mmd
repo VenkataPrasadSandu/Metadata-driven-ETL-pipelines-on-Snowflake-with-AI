@@ -1,0 +1,16 @@
+flowchart LR
+    src[External Storage: S3 / ADLS / GCS] --> stage[Snowflake Stage]
+    stage --> discover[SP_DISCOVER_FILES]
+    discover --> fc[CONTROL.FILE_CONTROL]
+    fc --> ddl[SP_CREATE_OR_EVOLVE_TARGETS]
+    ddl --> bronze[BRONZE / Iceberg Target Tables]
+    fc --> ingest[SP_INGEST_FILES]
+    ingest --> bronze
+    bronze --> dq[SP_RUN_DQ_RULES]
+    dq --> dqres[CONTROL.DQ_RESULT]
+    bronze --> cortex[Snowflake Cortex]
+    cortex --> ai[CONTROL.AI_SUGGESTION_LOG]
+    fc --> logs[CONTROL.INGEST_LOG]
+    logs --> ui[Streamlit Control Tower]
+    dqres --> ui
+    ai --> ui

@@ -1,0 +1,12 @@
+definition_version: 2
+
+entities:
+  metadata_control_tower:
+    type: streamlit
+    identifier:
+      name: METADATA_ETL_CONTROL_TOWER
+    main_file: streamlit_app.py
+    query_warehouse: ETL_WH
+    stage: CONTROL.STREAMLIT_STAGE
+    artifacts:
+      - app/streamlit_app.py
